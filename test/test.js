@@ -36,7 +36,7 @@ describe("server", function() {
         fs.writeFileSync(fixturePath, "google");
 
         request
-          .get("/" + fixtureName)
+          .get("/" + fixtureName) // www.google.com
           .expect(200, /google/, function (err) {
             fs.unlinkSync(fixturePath);
             done(err);

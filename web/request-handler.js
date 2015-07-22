@@ -9,10 +9,9 @@ exports.handleRequest = function (req, res) {
 	var indexData = null;
   var website = null;
 
-	if (req.method === 'GET') {
+  if (req.method === 'GET') {
 
-    // Find out url of req object
-    console.log('req.url', req.url);
+    // Examine the incoming url. If it's simply a slash, return the index path
     if(req.url === '/'){
       fs.readFile(archive.paths.index, function (err, data) {
        if (err) throw err;
@@ -21,7 +20,13 @@ exports.handleRequest = function (req, res) {
       res.end(indexData);
     });
 
-    } else {
+    } 
+    else if (req.url === '/arglebargle'){
+      res.statusCode = 404;
+      res.end();
+    }
+    // ************ NOTE: our file google.com was deleted from archives after running this file
+    else { // If url is something besides a slash, attach the url to the archived sites path and return
       website = req.url;
 
       fs.readFile(archive.paths.archivedSites + website, function (err, data) {
@@ -31,7 +36,7 @@ exports.handleRequest = function (req, res) {
       res.end(indexData);
     });
     }
- 
+
   }
 
 };
