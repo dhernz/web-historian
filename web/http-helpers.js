@@ -15,7 +15,17 @@ exports.serveAssets = function(res, asset, callback) {
   // (Static files are things like html (yours or archived from others...),
   // css, or anything that doesn't change often.)
 };
+exports.collectData = function(request,callback){
+  var data = "";
+  request.on('data',function(chunck){
+    data += chunck;
+  });
 
+  request.on('end',function(){
+    callback(data);
+  });
+
+};
 
 
 // As you progress, keep thinking about what helper functions you can put here!
