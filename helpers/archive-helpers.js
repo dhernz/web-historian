@@ -37,7 +37,18 @@ exports.readListOfUrls = function(callback){
 }  
 
 exports.isUrlInList = function(urlTarget, callback){
-
+        console.log(urlTarget);
+        var isFound = false;
+  fs.readFile(this.paths.list,function (err, data) {
+    if (err) throw err;
+    var arrData = data.toString().split('\n');
+    for(var i = 0; i< arrData; i++){
+      if(arrData[i] === urlTarget){
+        isFound = true;
+      }
+    }
+    callback(isFound);
+  });
 };
 
 exports.addUrlToList = function(){
