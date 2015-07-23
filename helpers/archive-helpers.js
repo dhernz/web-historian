@@ -37,8 +37,7 @@ exports.readListOfUrls = function(callback){
 }  
 
 exports.isUrlInList = function(urlTarget, callback){
-        console.log(urlTarget);
-        var isFound = false;
+  var isFound = false;
   fs.readFile(this.paths.list,function (err, data) {
     if (err) throw err;
     var arrData = data.toString().split('\n');
@@ -51,10 +50,27 @@ exports.isUrlInList = function(urlTarget, callback){
   });
 };
 
-exports.addUrlToList = function(){
+exports.addUrlToList = function(urlToAdd, callback){
+  fs.writeFile(this.paths.list, urlToAdd, function (err) {
+    if (err) throw err;
+    callback();
+  });
 };
 
-exports.isUrlArchived = function(){
+exports.isUrlArchived = function(urlTarget,callback){
+ var isFound = false;
+  fs.readdir(this.paths.archivedSites,function (err, files) {
+    if (err) throw err;
+    for(var i = 0; i< files; i++){
+      if(files[i] === urlTarget){
+        isFound = true;
+      }
+    }
+    callback(isFound);
+  });
+
+
+
 };
 
 exports.downloadUrls = function(){
