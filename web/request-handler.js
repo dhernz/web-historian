@@ -8,7 +8,8 @@ exports.handleRequest = function (req, res) {
 	
 	var indexData = null;
   var website = null;
-
+  var body = '';
+  var bodyParsed = '';
   if (req.method === 'GET') {
 
     // Examine the incoming url. If it's simply a slash, return the index path
@@ -35,7 +36,27 @@ exports.handleRequest = function (req, res) {
       // console.log('indexData', indexData);  
       res.end(indexData);
     });
-    }
+    } 
+
+  }
+
+  if(req.method === 'POST'){
+
+    req.on('data', function(data) {
+      body += data;
+    });
+
+    req.on('end', function (){
+        bodyParsed = JSON.parse(body).url;
+        console.log('bodyParsed', bodyParsed );
+      fs.writeFile(archive.paths.list, bodyParsed, function (err) {
+        if (err) throw err;
+        console.log('It\'s saved!');
+        res.statusCode = 302;
+
+      });
+
+    });
 
   }
 
