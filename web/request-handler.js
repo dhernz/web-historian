@@ -46,13 +46,14 @@ exports.handleRequest = function (req, res) {
       body += data;
     });
 
+
     req.on('end', function (){
-        bodyParsed = JSON.parse(body).url;
-        console.log('bodyParsed', bodyParsed );
-      fs.writeFile(archive.paths.list, bodyParsed, function (err) {
+        var bodyUTF = body.toString('utf8');
+        bodyParsed = JSON.parse(bodyUTF);
+      fs.writeFile(archive.paths.list, bodyParsed.url + '\n', function (err) {
         if (err) throw err;
-        console.log('It\'s saved!');
         res.statusCode = 302;
+        res.end();
 
       });
 
