@@ -11,20 +11,15 @@ var getPost = function(request, response){
   var obj = null;
 
   helpers.collectData(request,function(data){
-    bodyParsed = JSON.parse(data).url + '\n';
-    console.log('bodyParsed', bodyParsed);
+    var formattedUrl = data.substr(4);
+    console.log('only', formattedUrl);
+    //bodyParsed = JSON.parse(data).url + '\n';
     archive.addUrlToList(bodyParsed, function() {
       sendResponse(response, obj, 302);
     });
   });
 
 }
-
-
-
-
-
-
 
 exports.handleRequest = function (req, res) {
 	

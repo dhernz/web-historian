@@ -52,7 +52,6 @@ exports.isUrlInList = function(urlTarget, callback){
 
 exports.addUrlToList = function(urlToAdd, callback){
   fs.writeFile(this.paths.list, urlToAdd, function (err) {
-    console.log('this is the url we are adding', urlToAdd);
     if (err) throw err;
     callback();
   });
